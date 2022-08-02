@@ -1,0 +1,15 @@
+# Requirements for code
+azure-identity
+azure-storage-blob
+polling
+pycountry
+pyarrow
+fhirpathpy
+pandas
+PyYAML == 6.0
+phdi @ git+https://github.com/CDCgov/phdi-sdk.git
+
+# Requirements for Demo
+memory-profiler
+ipykernel
+matplotlib
