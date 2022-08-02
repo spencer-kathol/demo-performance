@@ -6,6 +6,7 @@ import pathlib
 import pyarrow as pa
 import pyarrow.parquet as pq
 import random
+import sys  # DEMO
 import yaml
 
 from functools import cache
@@ -93,8 +94,9 @@ def apply_schema_to_resource(resource: dict, schema: dict) -> dict:
     for field in resource_schema.keys():
         path = resource_schema[field]["fhir_path"]
 
-        parse_function = __get_fhirpathpy_parser(path)
-        value = parse_function(resource)
+        # parse_function = __get_fhirpathpy_parser(path)
+        # value = parse_function(resource)
+        value = fhirpathpy.evaluate(resource, path)
 
         if len(value) == 0:
             data[resource_schema[field]["new_name"]] = ""
@@ -269,12 +271,10 @@ def print_schema_summary(
 
 # demo
 if __name__ == "__main__":
-    schema_path = "example_schema.yaml"
-    output_path = "."
-    fhir_url = "https://pitest-fhir.azurehealthcareapi.com"
-    output_format = "parquet"
+    schema_path = Path(sys.argv[1])
+    output_path = Path(sys.argv[2])
+    output_format = sys.argv[3]
+    fhir_url = sys.argv[4]
     cred_manager = AzureFhirServerCredentialManager(fhir_url=fhir_url)
 
-    schema_path = Path(schema_path)
-    output_path = Path(output_path)
     make_schema_tables(schema_path, output_path, output_format, fhir_url, cred_manager)

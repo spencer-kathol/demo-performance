@@ -15,8 +15,6 @@ from phdi.azure import AzureFhirServerCredentialManager
 from phdi.fhir import fhir_server_get
 from typing import Literal, List, Union, Callable
 
-from memory_profiler import profile  # DEMO
-
 
 def load_schema(path: str) -> dict:
     """
@@ -109,7 +107,6 @@ def apply_schema_to_resource(resource: dict, schema: dict) -> dict:
     return data
 
 
-@profile
 def make_table(
     schema: dict,
     output_path: pathlib.Path,
